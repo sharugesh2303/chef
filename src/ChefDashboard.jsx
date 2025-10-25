@@ -13,13 +13,12 @@ import {
 import axios from 'axios';
 
 // === CONFIGURATION ===
-// --- FIXED: This now uses your Vercel Environment Variable ---
+// This is the fix: It now uses your Vercel Environment Variable
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 
 
 // Simple slide-up animation for the modal & Sparkle styles
 const GlobalStyles = () => (
-    // --- CORRECTED: Use standard <style> tag ---
     <style>{`
         @keyframes slide-up {
             from { opacity: 0; transform: translateY(20px); }

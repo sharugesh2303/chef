@@ -3,10 +3,8 @@ import { Utensils, Lock, Mail, LogIn, Loader } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // --- CONFIGURATION ---
-// This now correctly uses the Vercel Environment Variable
+// This is the fix: It now uses your Vercel Environment Variable
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
-
-// This is the endpoint your backend server.js file uses
 const LOGIN_ENDPOINT = `${API_BASE_URL}/staff/login`;
 
 
@@ -22,8 +20,7 @@ export default function ChefLoginPage({ onLoginSuccess }) {
         setError('');
 
         try {
-            // 1. Send credentials to the staff login endpoint
-            const response = await fetch(LOGIN_ENDPOINT, {
+            const response = await fetch(LOGIN_ENDPOINT, { // Use the correct endpoint
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -32,18 +29,15 @@ export default function ChefLoginPage({ onLoginSuccess }) {
             const data = await response.json();
 
             if (response.ok) {
-                // SUCCESS: Check that the token exists in the response data
                 if (data.token) {
-                    // Store token locally and notify the parent component
                     localStorage.setItem('chefToken', data.token);
-                    onLoginSuccess(data.token); // This should trigger App.jsx to re-render
+                    onLoginSuccess(data.token);
                 } else {
-                    setError('Login successful, but token not found in response.');
+                    setError('Login successful, but token not found.');
                     setLoading(false);
                 }
             } else {
-                // FAILURE: Show error message from the backend
-                setError(data.message || 'Login failed. Invalid credentials or server error.');
+                setError(data.message || 'Login failed. Invalid credentials.');
                 setLoading(false);
             }
 
