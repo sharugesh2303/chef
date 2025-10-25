@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'; // Import Link for navigation
 // --- CONFIGURATION ---
 // Use the VITE_API_URL from your Vercel/local .env file
 // Fallback to your local backend port for 'npm run dev'
+// We use 10000 because that is your backend's port on Render
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 
 // --- IMPORTANT ---
@@ -132,3 +133,4 @@ export default function ChefLoginPage({ onLoginSuccess }) {
         </div>
     );
 }
+
