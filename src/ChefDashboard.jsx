@@ -14,7 +14,7 @@ import axios from 'axios';
 
 // === CONFIGURATION ===
 // --- FIXED: This now uses your Vercel Environment Variable ---
-const API_BASE_URL = import.meta.env.VITE_API_URL 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 
 
 // Simple slide-up animation for the modal & Sparkle styles

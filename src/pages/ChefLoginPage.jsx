@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // --- CONFIGURATION ---
 // This now correctly uses the Vercel Environment Variable
-const API_BASE_URL = import.meta.env.VITE_API_URL 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 
 // This is the endpoint your backend server.js file uses
 const LOGIN_ENDPOINT = `${API_BASE_URL}/staff/login`;
