@@ -13,7 +13,9 @@ import {
 import axios from 'axios';
 
 // === CONFIGURATION ===
-const API_BASE_URL = 'http://localhost:5000/api';
+// --- FIXED: Use the Vercel/Render environment variable ---
+// Fallback to your local 10000 port for 'npm run dev'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 
 // Simple slide-up animation for the modal & Sparkle styles
 const GlobalStyles = () => (
@@ -324,16 +326,16 @@ export default function ChefDashboard({ handleLogout }) {
 
     if (error && !error.includes("Session expired")) {
          return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-slate-900 text-white p-6">
+             <div className="flex flex-col items-center justify-center min-h-screen bg-slate-900 text-white p-6">
                  <SparkleOverlay />
-                <AlertTriangle className="w-8 h-8 mb-4 text-red-500" />
-                <p className="text-center text-lg font-semibold">Error: {error}</p>
+                 <AlertTriangle className="w-8 h-8 mb-4 text-red-500" />
+                 <p className="text-center text-lg font-semibold">Error: {error}</p>
                  <button onClick={loadOrders} className="mt-4 text-orange-400 hover:underline flex items-center">
-                    <RefreshCw className="w-4 h-4 mr-1"/> Try Again
+                     <RefreshCw className="w-4 h-4 mr-1"/> Try Again
                  </button>
                  <button onClick={handleLogout} className="mt-2 text-indigo-400 hover:underline">Go to Login</button>
-            </div>
-        );
+             </div>
+         );
     }
 
     return (
@@ -366,7 +368,7 @@ export default function ChefDashboard({ handleLogout }) {
 
                 {/* --- Title Above List --- */}
                  <h2 className={`text-2xl font-bold text-white text-center mb-4`}>
-                     Paid Orders (New) ({orders.length})
+                    Paid Orders (New) ({orders.length})
                  </h2>
 
                 {/* --- SINGLE COLUMN LAYOUT --- */}
@@ -385,9 +387,9 @@ export default function ChefDashboard({ handleLogout }) {
                      {/* Loading Indicator (Global) */}
                      {loading && orders.length === 0 && (
                          <div className="flex justify-center items-center p-10 mt-6">
-                            <Loader className="w-8 h-8 mr-3 animate-spin text-orange-400" />
-                            <span className="text-slate-400 text-lg">Loading Orders...</span>
-                        </div>
+                             <Loader className="w-8 h-8 mr-3 animate-spin text-orange-400" />
+                             <span className="text-slate-400 text-lg">Loading Orders...</span>
+                         </div>
                      )}
 
                      {/* No Orders Message */}
