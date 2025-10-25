@@ -13,9 +13,9 @@ import {
 import axios from 'axios';
 
 // === CONFIGURATION ===
-// --- FIXED: Use the Vercel/Render environment variable ---
-// Fallback to your local 10000 port for 'npm run dev'
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
+// --- FIXED: This now uses your Vercel Environment Variable ---
+const API_BASE_URL = import.meta.env.VITE_API_URL 
+
 
 // Simple slide-up animation for the modal & Sparkle styles
 const GlobalStyles = () => (
