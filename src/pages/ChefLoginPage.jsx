@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { Utensils, Lock, Mail, LogIn, Loader } from 'lucide-react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Link } from 'react-router-dom';
 
 // --- CONFIGURATION ---
-// Use the VITE_API_URL from your Vercel/local .env file
-// Fallback to your local backend port for 'npm run dev'
-// We use 10000 because that is your backend's port on Render
+// This now correctly uses the Vercel Environment Variable
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 
-// --- IMPORTANT ---
-// Make sure your backend login route is /api/staff/login
-// Or change it below to match your backend (e.g., /api/chef/login)
-const LOGIN_ENDPOINT = `${API_BASE_URL}/staff/login`; 
+// This is the endpoint your backend server.js file uses
+const LOGIN_ENDPOINT = `${API_BASE_URL}/staff/login`;
 
 
 export default function ChefLoginPage({ onLoginSuccess }) { 
@@ -56,7 +52,6 @@ export default function ChefLoginPage({ onLoginSuccess }) {
             setError('Network connection failed. Server might be down or URL incorrect.');
             setLoading(false);
         }
-        // We don't need the 'finally' block if we set loading to false in all error cases.
     };
 
     return (
@@ -124,7 +119,6 @@ export default function ChefLoginPage({ onLoginSuccess }) {
                 </form>
 
                 <div className="mt-4 text-sm">
-                    {/* Use <Link> for internal navigation instead of <a> */}
                     <Link to="/student-login" className="text-gray-400 hover:text-indigo-400 transition duration-200">
                         Switch to Student Login
                     </Link>
@@ -133,4 +127,3 @@ export default function ChefLoginPage({ onLoginSuccess }) {
         </div>
     );
 }
-
