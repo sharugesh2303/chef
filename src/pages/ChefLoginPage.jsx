@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Utensils, Lock, Mail, LogIn, Loader } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 // --- CONFIGURATION ---
-// This URL must match your Node.js server's port and the new staff login endpoint
-const API_BASE_URL = 'http://localhost:5000/api'; 
+// Use the VITE_API_URL from your Vercel/local .env file
+// Fallback to your local backend port for 'npm run dev'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
+
+// --- IMPORTANT ---
+// Make sure your backend login route is /api/staff/login
+// Or change it below to match your backend (e.g., /api/chef/login)
+const LOGIN_ENDPOINT = `${API_BASE_URL}/staff/login`; 
+
 
 export default function ChefLoginPage({ onLoginSuccess }) { 
     const [email, setEmail] = useState(''); 
@@ -18,7 +26,7 @@ export default function ChefLoginPage({ onLoginSuccess }) {
 
         try {
             // 1. Send credentials to the staff login endpoint
-            const response = await fetch(`${API_BASE_URL}/staff/login`, {
+            const response = await fetch(LOGIN_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -31,24 +39,23 @@ export default function ChefLoginPage({ onLoginSuccess }) {
                 if (data.token) {
                     // Store token locally and notify the parent component
                     localStorage.setItem('chefToken', data.token);
-                    onLoginSuccess(data.token); 
+                    onLoginSuccess(data.token); // This should trigger App.jsx to re-render
                 } else {
                     setError('Login successful, but token not found in response.');
+                    setLoading(false);
                 }
             } else {
                 // FAILURE: Show error message from the backend
                 setError(data.message || 'Login failed. Invalid credentials or server error.');
+                setLoading(false);
             }
 
         } catch (err) {
             console.error("Network or Fetch Error:", err);
             setError('Network connection failed. Server might be down or URL incorrect.');
-        } finally {
-            // Stop loading only if we failed (successful login re-renders the whole app)
-            if (!localStorage.getItem('chefToken')) {
-                setLoading(false);
-            }
+            setLoading(false);
         }
+        // We don't need the 'finally' block if we set loading to false in all error cases.
     };
 
     return (
@@ -116,11 +123,12 @@ export default function ChefLoginPage({ onLoginSuccess }) {
                 </form>
 
                 <div className="mt-4 text-sm">
-                    <a href="/student-login" className="text-gray-400 hover:text-indigo-400 transition duration-200">
+                    {/* Use <Link> for internal navigation instead of <a> */}
+                    <Link to="/student-login" className="text-gray-400 hover:text-indigo-400 transition duration-200">
                         Switch to Student Login
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
     );
-}           
+}
