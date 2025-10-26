@@ -7,9 +7,8 @@ import { Link } from 'react-router-dom';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api';
 const LOGIN_ENDPOINT = `${API_BASE_URL}/staff/login`;
 
-// 🟢 Reusing the student/admin background image path
+// Reusing the student/admin background image path
 const BACKGROUND_IMAGE_URL = '/background-jjcet.jpg'; 
-// NOTE: Ensure 'background-jjcet.jpg' is in your project's 'public' folder.
 
 
 export default function ChefLoginPage({ onLoginSuccess }) { 
@@ -24,7 +23,7 @@ export default function ChefLoginPage({ onLoginSuccess }) {
         setError('');
 
         try {
-            const response = await fetch(LOGIN_ENDPOINT, { // Use the correct endpoint
+            const response = await fetch(LOGIN_ENDPOINT, { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -53,16 +52,13 @@ export default function ChefLoginPage({ onLoginSuccess }) {
     };
 
     return (
-        // 🟢 UPDATED: Background Image and Styling
         <div 
             className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center p-4" 
             style={{ backgroundImage: `url(${BACKGROUND_IMAGE_URL})` }}
         >
             
-            {/* 🟢 ADDED: Semi-transparent dark overlay */}
             <div className="absolute inset-0 bg-black opacity-60"></div>
             
-            {/* 🟢 UPDATED: Login Card (z-index ensures it's on top) */}
             <div className="relative z-10 p-8 bg-gray-800 bg-opacity-90 rounded-xl shadow-2xl w-full max-w-sm text-center border-t-4 border-indigo-500">
                 
                 <Utensils className="w-12 h-12 mx-auto mb-4 text-indigo-400" />
@@ -121,13 +117,10 @@ export default function ChefLoginPage({ onLoginSuccess }) {
                     </button>
                 </form>
 
-                <div className="mt-4 text-sm">
-                    <Link to="/student-login" className="text-gray-400 hover:text-indigo-400 transition duration-200">
-                        Switch to Student Login
-                    </Link>
-                </div>
-                {/* 🟢 ADDED: Powered by Nexora footer */}
-                <p className="text-center text-gray-500 text-xs mt-8">
+                {/* 🟢 REMOVED: Switch to Student Login was here */}
+                
+                {/* 🟢 ADJUSTED: Powered by Nexora footer styling */}
+                <p className="text-center text-gray-400 text-sm mt-6">
                     Powered by Nexora
                 </p>
             </div>
